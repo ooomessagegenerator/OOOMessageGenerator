@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funny OOO Message Generator</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #1c1c2e;
+  color: #f0f0f0;
+}
+
+header {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background: linear-gradient(135deg, #4b3bff, #9b78ff);
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.wrapper {
+  max-width: 1100px;
+  margin: auto;
+  padding: 1rem;
+}
+
+.layout {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.form-box {
+  flex: 1;
+  background: #2c2c3e;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.form-box label {
+  display: block;
+  margin-top: 0.8rem;
+  font-weight: 600;
+  color: #d1caff;
+}
+
+.form-box input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  border-radius: 6px;
+  border: none;
+  background: #3a3a4e;
+  color: #fff;
+}
+
+.form-box button {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 6px;
+  background: #9b78ff;
+  color: white;
+  font-size: 1rem;
+}
+
+.messages {
+  flex: 1;
+}
+
+.email {
+  background: white;
+  color: #1c1c2e;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.email-header {
+  background: #4b3bff;
+  color: white;
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+}
+
+.email-body {
+  padding: 1rem;
+  white-space: pre-wrap;
+}
+
+/* MOBILE SAFE */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>Funny OOO Message Generator</h1>
+</header>
+
+<div class="wrapper">
+  <div class="layout">
+
+    <div class="form-box">
+      <label>Company (optional)</label>
+      <input id="company">
+
+      <label>Position (optional)</label>
+      <input id="position">
+
+      <label>Holiday type</label>
+      <input id="holiday">
+
+      <label>Period</label>
+      <input id="period" placeholder="e.g. 2 weeks">
+
+      <button type="button" onclick="generate()">Generate message</button>
+    </div>
+
+    <div class="messages" id="messages"></div>
+
+  </div>
+</div>
+
+<script>
+function generate() {
+  const company = companyValue();
+  const position = value("position");
+  const holiday = value("holiday") || "holiday";
+  const period = value("period") || "a short while";
+
+  const templates = [
+`Dear Sender,
+
+I am currently on a ${holiday} for ${period}. Emails will remain untouched and responsibilities will patiently wait.
+
+Best regards,`,
+
+`Dear Sender,
+
+I am away enjoying a ${holiday}. For ${period}, productivity has been replaced with relaxation.
+
+Best regards,`,
+
+`Dear Sender,
+
+Out of office for ${period}. Tasks are on pause and will resume upon my return from a ${holiday}.
+
+Best regards,`
+  ];
+
+  const msg = templates[Math.floor(Math.random()*templates.length)];
+
+  const box = document.createElement("div");
+  box.className = "email";
+
+  box.innerHTML = `
+    <div class="email-header">Out of Office</div>
+    <div class="email-body">${msg}</div>
+  `;
+
+  document.getElementById("messages").prepend(box);
+}
+
+function value(id) {
+  return document.getElementById(id).value.trim();
+}
+
+function companyValue() {
+  const c = value("company");
+  return c ? c : "";
+}
+</script>
+
+</body>
+</html>
